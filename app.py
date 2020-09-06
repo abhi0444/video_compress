@@ -33,10 +33,9 @@ def index():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
             size = request.form['value']
             size = int(size)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             process_file(os.path.join(UPLOAD_FOLDER, filename), filename,size)
             e_mail = request.form['e_mail']
             name = request.form['name']
@@ -50,9 +49,9 @@ def process_file(path, filename,size):
 
 
 def detect_object(path,filename,size):
-    cap = cv2.VideoCapture(path)
+    cap = cv2.VideoCapture(filename)
     ret, frame = cap.read()
-    FPS= 23
+    FPS= 50
     fps = cap.get(cv2.CAP_PROP_FPS)
 
     W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
