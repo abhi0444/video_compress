@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <title>Video Compressor</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+</head>
+
+<body>
+
+   {% with messages = get_flashed_messages() %}
+   {% if messages %}
+   <ul class=flashes>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+   </ul>
+   {% endif %}
+   {% endwith %}
+   <nav class="navbar navbar-dark bg-dark ">
+      <a class="navbar-brand navbar-center" href="#">Video Compressor</a>
+   </nav>
+   <div class="container">
+      <div class="starter-template">
+         <h2>To Compress Video</h2>
+         <p>Upload a video (Max Video Duration Supports in 30sec due to using gmail services for video transfer either app will crash)</p>
+      </div>
+   </div>
+
+
+
+
+   <div class="container">
+      <form method=post enctype=multipart/form-data>
+        <label for="fname">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="lname">Email :</label>
+         <input type="text" id="lname" name="e_mail">
+         <br><br>
+          <label for="lname"> Compress Ratio:</label>
+          <input type="number" id="value" name="value">
+         <input type=file name=file onchange="loadFile(event)">
+         <input type=submit value=Upload class="btn btn-primary">
+      </form>
+      <img id="output" alt="" width="40%" height="40%" />
+   </div>
+
+
+
+
+   <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+</body>
+
+</html>
