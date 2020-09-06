@@ -64,11 +64,11 @@ def detect_object(path,filename,size):
     i=0
     ret, image = cap.read()
     while ret:
-        res = cv2.resize(image, size)
-        out.write(res)
         ret,image = cap.read()
-        i +=1
-        print(i)
+        if ret:
+            res = cv2.resize(image, size)
+        out.write(res)
+        
 
 def send_mail(e_ma,fname,name):
 
