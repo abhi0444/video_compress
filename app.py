@@ -24,6 +24,29 @@ app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file attached in request')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No file selected')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            size = request.form['value']
+            size = int(size)
+            detect_object(filename,size)
+            e_mail = request.form['e_mail']
+            name = request.form['name']
+            data='static/downloads/video.mkv'
+            send_mail(e_mail,data,name)
+            return render_template("index.html")
+    return render_template('index.html')
+
 def detect_object(filename,size):
     cap = cv2.VideoCapture(filename)
     ret, frame = cap.read()
@@ -48,8 +71,6 @@ def detect_object(filename,size):
         i +=1
         print(i)
         #cv2.imshow('frame',frame)
-
-
 
 def send_mail(e_ma,fname,name):
 
@@ -81,33 +102,6 @@ def send_mail(e_ma,fname,name):
     server.starttls()
     server.login(email_user,email_password)
     server.sendmail(email_user,email_send,text)
-
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file attached in request')
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            flash('No file selected')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            size = request.form['value']
-            size = int(size)
-            detect_object(filename,size)
-            e_mail = request.form['e_mail']
-            name = request.form['name']
-            data='static/downloads/video.mKV'
-            send_mail(e_mail,data,name)
-            return render_template("index.html")
-    return render_template('index.html')
-
-
-
 # download
 # @app.route('/uploads/<filename>')
 # def uploaded_file(filename):
