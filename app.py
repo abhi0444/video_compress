@@ -53,7 +53,7 @@ def process_file(path, filename,size):
 
 
 def detect_object(path,filename,size):
-    cap = cv2.VideoCapture(filename)
+    cap = cv2.VideoCapture(path)
     ret, frame = cap.read()
     FPS= 30
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -66,7 +66,7 @@ def detect_object(path,filename,size):
     fourcc = cv2.VideoWriter_fourcc(*'MPEG')
     out = cv2.VideoWriter('static/downloads/video.mkv', fourcc, FPS,Frame_size, isColor = True)
     i=0
-    ret, image = VP.read()
+    ret, image = cap.read()
     while ret:
         res = cv2.resize(image, Frame_size)
         # check for successfulness of cap.read()
