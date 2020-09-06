@@ -39,13 +39,18 @@ def index():
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             size = request.form['value']
             size = int(size)
-            detect_object(filename,size)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            process_file(os.path.join(UPLOAD_FOLDER, filename), filename,size)
             e_mail = request.form['e_mail']
             name = request.form['name']
             data='static/downloads/video.mkv'
             send_mail(e_mail,data,name)
             return render_template("index.html")
     return render_template('index.html')
+
+def process_file(path, filename,size):
+    detect_object(path, filename,size)
+
 
 def detect_object(filename,size):
     cap = cv2.VideoCapture(filename)
