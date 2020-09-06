@@ -36,7 +36,7 @@ def index():
             size = request.form['value']
             size = int(size)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            process_file(os.path.join(UPLOAD_FOLDER, filename), filename,size)
+            process_file(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename,size)
             e_mail = request.form['e_mail']
             name = request.form['name']
             data='static/downloads/video.mkv'
@@ -49,7 +49,7 @@ def process_file(path, filename,size):
 
 
 def detect_object(path,filename,size):
-    cap = cv2.VideoCapture(filename)
+    cap = cv2.VideoCapture(path)
     ret, frame = cap.read()
     FPS= 50
     fps = cap.get(cv2.CAP_PROP_FPS)
