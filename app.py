@@ -64,15 +64,15 @@ def detect_object(path,filename,size):
     H = H-int((H*size)/100)
     Frame_size = ((W, H))
     fourcc = cv2.VideoWriter_fourcc(*'MPEG')
-    out = cv2.VideoWriter('static/downloads/video.mkv', fourcc, FPS,Frame_size)
+    out = cv2.VideoWriter('static/downloads/video.mkv', fourcc, FPS,Frame_size, isColor = True)
     i=0
+    ret, image = VP.read()
     while ret:
-        ret,image = cap.read()
-        if ret:
-            res = cv2.resize(image, Frame_size)
+        res = cv2.resize(image, Frame_size)
         # check for successfulness of cap.read()
         # Save the video
         out.write(res)
+        ret,image = cap.read()
         i +=1
         print(i)
         #cv2.imshow('frame',frame)
