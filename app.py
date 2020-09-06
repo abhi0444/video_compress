@@ -51,22 +51,20 @@ def process_file(path, filename,size):
 def detect_object(path,filename,size):
     cap = cv2.VideoCapture(path)
     ret, frame = cap.read()
-    FPS= 50
-    fps = cap.get(cv2.CAP_PROP_FPS)
-
-    W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    W = W-int((W*size)/100)
-    H = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    H = H-int((H*size)/100)
-    size = ((W, H))
+    FPS= 30
+    width = int(frame.shape[1]*int(size)/100)
+    height = int(frame.shape[0]*int(size)/100)
+    dim = (width,height)
     fourcc = cv2.VideoWriter_fourcc(*'MPEG')
-    out = cv2.VideoWriter('static/downloads/video.mkv', fourcc, FPS,size, isColor = True)
+    out = cv2.VideoWriter('static/downloads/video.mkv', fourcc, FPS,(width,height))
+    #out = cv2.VideoWriter('/content/drive/My Drive/ISL/58.mkv', fourcc, FPS,(width,height))
+
     i=0
     ret, image = cap.read()
     while ret:
         ret,image = cap.read()
         if ret:
-            res = cv2.resize(image, size)
+            res = cv2.resize(image,dim, cv2.INTER_AREA)
         out.write(res)
         
 
