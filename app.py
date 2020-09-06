@@ -52,8 +52,8 @@ def process_file(path, filename,size):
     detect_object(path, filename,size)
 
 
-def detect_object(filename,size):
-    cap = cv2.VideoCapture(filename)
+def detect_object(path,filename,size):
+    cap = cv2.VideoCapture(path)
     ret, frame = cap.read()
     FPS= 30
     fps = cap.get(cv2.CAP_PROP_FPS)
