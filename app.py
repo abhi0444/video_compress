@@ -70,8 +70,8 @@ def detect_object(path,filename,size):
 
 def send_mail(e_ma,fname,name):
 
-    email_user = 'gabhi3859@gmail.com'
-    email_password = 'abhimatgupta'
+    email_user = 'Enter Email'
+    email_password = 'Enter Password'
     email_send = e_ma
 
     subject = 'Compressed Video'
